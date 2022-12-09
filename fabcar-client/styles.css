@@ -1,0 +1,28 @@
+label{
+    display: inline-block;
+    width: 90px;
+    padding: 10px 5px;
+}
+#show-car {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.form-container{
+    border: 1px solid rgb(229, 229, 229);
+    width: 50%;
+    margin: 10px auto;
+    padding: 15px 10px;
+    border-radius: 5px;
+}
+
+.car-item {
+    width: 150px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+.text-center {
+    text-align: center;
+}

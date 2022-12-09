@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./styles.css">
+
+    <title>FabCar Using Hyperledger Fabric</title>
+</head>
+<body>
+    <div class="text-center">
+        <h1>
+            Fabcar
+        </h1>
+        <button onclick="getAll()">Get All Car</button>
+        <span>||</span>
+        <input id="search-input" type="text">
+        <button onclick="search()">Search</button>
+        <div id="show-car"></div>
+    </div>
+
+    <div class="text-center form-container">
+        <h3 >Create Car</h3>
+        <form id="createForm" action="" name="createCar">
+            <div>
+                <label for="">Car ID/Key</label>
+                <input name="key" />
+            </div>
+            
+            <div>
+                <label for="">Made In</label>
+                <input name="make" />
+            </div>
+
+            <div>
+                <label for="">Brand</label>
+                <input name="brand" />
+            </div>
+
+            <div>
+                <label for="">Color</label>
+                <input name="color" />
+            </div>
+
+            <div>
+                <label for="">Owner</label>
+                <input name="owner" />
+            </div>
+
+            <div>
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center form-container">
+        <h3 >Update Owner</h3>
+        <form id="updateForm" action="" name="updateOwner">
+            <div>
+                <label for="">Car ID/Key</label>
+                <input name="key" />
+            </div>
+            
+            <div>
+                <label for="">New Owner</label>
+                <input name="owner" />
+            </div>
+
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+
+        // CREATING NEW CAR
+        const createForm = document.getElementById('createForm')
+
+        // THIS IS AN EVENT LISTENER WHICH WILL RUN WHEN WE CLICK THE CREATE BUTTON
+        createForm.addEventListener("submit", function(event) {
+            event.preventDefault()
+            const bodyParam = new URLSearchParams( new FormData(createForm) )
+            
+                //CALLING CREATE API
+                fetch('http://localhost:3000/create', {
+                    method: 'POST',
+                    body: bodyParam
+                })
+                .then(res => {
+                    return res.json()
+                })
+                .then( parsedRes => {
+                    alert(parsedRes.message)
+                })
+                .catch(err => {
+                    console.error({ err })
+                })
+        });
+
+        // UPDATE: CHANGING CAR OWNER
+        const updateForm = document.getElementById('updateForm')
+
+        // THIS IS AN EVENT LISTENER WHICH WILL RUN WHEN WE CLICK THE UPDATE BUTTON
+        updateForm.addEventListener("submit", function(event) {
+            event.preventDefault()
+            const bodyParam = new URLSearchParams( new FormData(updateForm) )
+            
+                //CALLING UPDATE API
+                fetch('http://localhost:3000/update', {
+                    method: 'POST',
+                    body: bodyParam
+                })
+                .then(res => {
+                    if(res.status !== 200){
+                        alert('Unable to update')
+                        return
+                    }
+                    return res.json()
+                })
+                .then( parsedRes => {
+                    alert( parsedRes.message )
+                    getAll()
+                })
+                .catch(err => {
+                    alert(err.message)
+                    console.error({ err })
+                })
+        });
+
+
+        //SEARCH DATA
+        function search(){
+            // extracting value from input field
+            const value = document.getElementById('search-input').value
+            getAll( value )
+        }
+        
+        // GETTING ALL CAR DATA FROM API
+        function getAll( query ){
+            const api = query ? 'http://localhost:3000/get-car?key=' + query :  'http://localhost:3000/get-car'
+            fetch(api)
+                .then( res => {
+                    return res.json();
+                })
+                .then( parsedRes => {
+                    let carMarkup = ''; 
+                    parsedRes.forEach( item => {
+                        carMarkup = carMarkup +
+                            `<div class="car-item"> 
+                                <p>Key: ${ item.Key }</p>
+                                <p>Made In: ${ item.Record.make }</p>
+                                <p>Model: ${ item.Record.model }</p>
+                                <p>Color: ${ item.Record.color }</p>
+                                <p>Owner: ${ item.Record.owner }</p>
+                            </div>`
+                    })
+                    // getting the html container with id=show-car
+                    const carContainer = document.getElementById('show-car')
+
+                    //CLEANING EXISTING CAR HTML NODE/ELEMENT
+                    while (carContainer.hasChildNodes()) {
+                        carContainer.removeChild(carContainer.firstChild);
+                    }
+
+                    // Adding new car data markup
+                    carContainer.insertAdjacentHTML('beforeend', carMarkup)
+                })
+                .catch(err => {
+                    alert('Operation failed')
+                    console.error({ err })
+                })
+        }
+
+        
+    </script>
+</body>
+</html>
