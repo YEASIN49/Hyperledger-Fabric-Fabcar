@@ -4,7 +4,7 @@
 From the last lab, we created our dev environment and used test netwrok and intereact with an aplication called fabcar. Today we will extend our knowledge by understanding the inner mechanism of fabcar and finally we will see how we can integrate frontend with our fabcar application. Finally we will use it from our browser.
 
 
-### Let's rewind
+## Let's rewind ( Prerequisites )
 
 
 Before getting started, some of you may still have problems regarding the installation and setup of the environment. So we will rewind section 1 of last lab. If you already have docker installed and Hyperledger fabric fabric-samles, you can skip this step.
@@ -138,5 +138,122 @@ If fabric file already exist, delete and run the command again.
 ```
 sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
 ```
-This process will take time depending on your internet speed. Once end, you will see resonsse like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
-![App Screenshot](./_readme-image/5_install sample-fabric.png)
+This process will take time depending on your internet speed. Once end, you will see response like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
+![App Screenshot](./_readme-image/5_install_sample_fabric.png)
+
+20. Now iff you, check **fabric-samples** dirrectory, you will see a lot of files there. However,  for today's lab we only need somme of them. Therefore, all the files and directory, except the files mentioned in the image below:
+![App Screenshot](./_readme-image/6_required_file_list.png)
+
+These are the files aand directories we should have.
+
+- **Checkpoint ( optional ): Show this to your teacher.**
+    -
+
+
+
+## Section 1: Setting up files and folders
+In this section, we will see how we can communicate with the chaincode from the browser.
+
+1. First, download the files from https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar and unzip the contents. If you want you also can clone it. To clone it open terminal and issue:
+```
+cd
+git clone https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar.git
+```
+This will successfuly clone the github repository and now you should have a directoy called **Hyperledger-Fabric-Fabcar** to your **Home** directory. 
+![App Screenshot](./_readme-image/7_cloned_repo.png)
+
+2. **[ WILL PUT FLOW DIAGRAM LATER | JUST TO EXPLAIN THE DEVELOPMENT PROCESS ]**
+
+3. Now, go to the **Hyperledger-Fabric-Fabcar** directory and copy **fabric-client** and **javascript** folder.
+![App Screenshot](./_readme-image/8_copy_file.png)
+
+4. Now, go to the **fabric/fabric-samples/fabcar** directory and paste the copied files.
+![App Screenshot](./_readme-image/9_paste_file.png)
+Here, we are developing our application using javascript. So, you can delete **go, java and typescript** directory from here if you want. Just make sure we have **fabric-client, javascript, networkDown.sh and startFabric.sh** inside **fabcar**
+
+5. Now, open vscode or any other text editor you use and open **fabric-samples** there.
+![App Screenshot](./_readme-image/10_open_editor.png)
+You should have a similar window with these file in your text editor.
+You are now good to go to the next sesction.
+
+- **Checkpoint 1: Show this to your teacher**
+
+## Section 2: Running the complete application
+In this section, you will run the complete application added with User Interface to intereact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while runnign the application. Once you successfully run it, your teacher will explain the code for you. 
+
+1. Open terminal from your code editor. You current path should be in **fabric/fabric-samples** like mentionedin the image below:
+![App Screenshot](./_readme-image/11_editor_path.png)
+
+2. Go to the javascript directory inside fabcar using:
+```
+cd fabcar/javascript
+```
+3. Now, we need to install npm packages. You can find the necessary packages that we are going to install inside the package.json file. To install run:
+```
+npm i
+``` 
+If you cannot run the command for the permission, just add keyword "sudo" at the beginning of the command. This may take time to install packages depending on your internet connection. After, successfull installation, you should see some logs similar to image below:
+![App Screenshot](./_readme-image/12_package_installation.png)
+
+4. In the upcoming step, we will start the network and deploy chaincode. But we need to shut down if currently any network is running. To shut down first go to the  **fabcar** directory from the vscode terminal by:
+```
+cd ../
+```
+5. If you check the files of current directory by using the command ```ls``` you should see something like below:
+![App Screenshot](./_readme-image/13_current_path_fabcar.png)
+
+6. run the command to shut down the network:
+```
+./networkDown.sh
+```
+This should, stop existing running hyperledger fabric test-network. Again, if you cannot run the command for access permission restrictrin, simply add keyword 'sudo' at the beginning of the command. After successfully shutting down the network you should see response like below:
+![App Screenshot](./_readme-image/14_network_stop.png)
+
+7. Now, start the network:
+```
+./startFabric.sh javascript
+```
+Again, for permission restriction, use 'sudo'. This command, start and also deploy the chaincode. So, this will take time to complete. Once it is completed, you should see a large logs printed in your vscode termina which end with similar response like mentioned in the image below:
+![App Screenshot](./_readme-image/15_start_network.png)
+
+8. Now, we will power up our backend service. To do this, first go  to the **javascript** directory in fabcar.
+```
+cd javascript
+```
+9. run the command below to enroll aadmin to organization:
+```
+node enrollAdmin.js
+```
+You will get a similar response like below:
+![App Screenshot](./_readme-image/16.1_enrollAdmin.png)
+
+and then run the command to register user to organization:
+```
+node registerUser.js
+```
+
+This will create a user under organization. You will see a response like below:
+![App Screenshot](./_readme-image/16.2-_register_user.png)
+
+Finally, we will power up our backend using:  
+
+```
+npm start
+```
+This will, start the backend service and you should see a resonse like below:
+![App Screenshot](./_readme-image/16_start_backend.png)
+
+9. Now, leave the terminal untouched and open a new terminal from the vscode and go to the **fabcar-client** directory.
+```
+cd fabcar/fabcar-client/
+```
+10. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of option. Insall the extension shown in the image:
+![App Screenshot](./_readme-image/17_install_live_server.png)
+
+11. Now, click the **index.html** file and start **live-server** from the  bottom-right if vscode.
+![App Screenshot](./_readme-image/18_start_UI.png)
+
+This will start our frontend server and a browser popup will be open like image below:
+![App Screenshot](./_readme-image/19_UI.png)
+
+**checkpoint 2:Show this to  your teacher**
