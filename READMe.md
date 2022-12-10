@@ -101,3 +101,42 @@ Dont' worry, if this command does not show any response or logs in terminal.
 docker-compose --version
 ```
 You should see a version like **"docker-compose version 1.29.2, build 5becea4c"**
+
+14. Now, test the installation using the following steps:
+```
+mkdir hello-world
+cd hello-world
+nano docker-compose.yml
+
+```
+15. Now, add the following contents to the editor. After adding the following contents, press ctrl + o and then press enter to save the content. press ctrl + x to exit.  It is important to maintain indentation:
+```yml
+my-test:
+    image: hello-world
+```
+16. Now run the command: 
+```
+docker-compose up
+```
+The first time we run the command, if there's no local image named hello-world, Docker Compose will pull it from the Docker Hub public repository. Then it prints a similar message like below, which indicates our docker-compose installation is complete.
+![App Screenshot](./_readme-image/4_compose_up.png)
+
+17. Now, our computer is ready to install Hyperledger Fabric. But, the first step is to remove existing Fabric images, if any:
+```
+docker container prune
+```
+
+18. Next, copy and run the exact same command( don't remove space to make it one line sentence ).
+```
+cd
+mkdir fabric
+cd fabric
+```
+If fabric file already exist, delete and run the command again. 
+
+19. Now, by issuing the following command we will install fabric version 2.2.2 and ca version 1.4.9
+```
+sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
+```
+This process will take time depending on your internet speed. Once end, you will see resonsse like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
+![App Screenshot](./_readme-image/5_install sample-fabric.png)
