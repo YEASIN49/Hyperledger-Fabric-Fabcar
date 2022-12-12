@@ -1,15 +1,15 @@
 
 # Hyperledger Fabric Part - 2
 
-From the last lab, we created our dev environment and used test netwrok and intereact with an aplication called fabcar. Today we will extend our knowledge by understanding the inner mechanism of fabcar and finally we will see how we can integrate frontend with our fabcar application. Finally we will use it from our browser.
+From the last lab, we created our dev environment and used test network and interact with an application called fabcar. Today we will extend our knowledge by understanding the inner mechanism of fabcar and finally we will see how we can integrate frontend with our fabcar application. Finally we will use it from our browser.
 
 
 ## Let's rewind ( Prerequisites )
 
 
-Before getting started, some of you may still have problems regarding the installation and setup of the environment. So we will rewind section 1 of last lab. If you already have docker installed and Hyperledger fabric fabric-samles, you can skip this step.
+Before getting started, some of you may still have problems regarding the installation and setup of the environment. So we will rewind section 1 of last lab. If you already have docker installed and Hyperledger fabric fabric-samples, you can skip this step.
 
-1.  Assuming you already have git installed in your computer. Check for git version from below command. If you do not get any version in the log you need to install git( *You can follow last lab for this step* )
+1.  Assuming you already have git installed in your computer. Check for the git version using the command provided below. If you do not get any version in the log you need to install git( *You can follow last lab for this step* )
 ```
 git --version 
 ```
@@ -87,7 +87,7 @@ This will restart your machine and then again open the terminal and follow **ste
 ```
 sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 ```
-Depanding on your internet, this may take time. When it is finished, you should see a response like below:
+Depending on your internet, this may take time. When it is finished, you should see a response like below:
 ![App Screenshot](./_readme-image/3_download_composer.png)
 
 12. Make it executable using: 
@@ -138,19 +138,19 @@ If fabric file already exist, delete and run the command again.
 ```
 sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
 ```
-This process will take time depending on your internet speed. Once end, you will see response like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
+This process will take time depending on your internet speed. Once it ends, you will see responses like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
 ![App Screenshot](./_readme-image/5_install_sample_fabric.png)
 
-🤔🤔🤔 If you face difficulties to run the command you try the alternative command provided below:
+🤔🤔🤔 If you face difficulties to run the command, try the alternative command provided below:
 
 ```
 sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.2 1.4.9
 ```
 
-20. Now iff you, check **fabric-samples** dirrectory, you will see a lot of files there. However,  for today's lab we only need somme of them. Therefore, all the files and directory, except the files mentioned in the image below:
+20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However,  for today's lab we only need some of them. Therefore, all the files and directory, except the files mentioned in the image below:
 ![App Screenshot](./_readme-image/6_required_file_list.png)
 
-These are the files aand directories we should have.
+These are the files and directories we should have.
 
 - **Checkpoint ( optional ): Show this to your teacher.**
     -
@@ -165,28 +165,26 @@ In this section, we will see how we can communicate with the chaincode from the 
 cd
 git clone https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar.git
 ```
-This will successfully clone the github repository and now you should have a directoy called **Hyperledger-Fabric-Fabcar** to your **Home** directory. 
+This will successfully clone the github repository and now you should have a directory called **Hyperledger-Fabric-Fabcar** to your **Home** directory. 
 ![App Screenshot](./_readme-image/7_cloned_repo.png)
 
-2. **[ WILL PUT FLOW DIAGRAM LATER | JUST TO EXPLAIN THE DEVELOPMENT PROCESS ]**
-
-3. Now, go to the **Hyperledger-Fabric-Fabcar** directory and copy **fabric-client** and **javascript** folder.
+2. Now, go to the **Hyperledger-Fabric-Fabcar** directory and copy **fabric-client** and **javascript** folder.
 ![App Screenshot](./_readme-image/8_copy_file.png)
 
-4. Now, go to the **fabric/fabric-samples/fabcar** directory and paste the copied files.
+3. Now, go to the **fabric/fabric-samples/fabcar** directory and paste the copied files.
 ![App Screenshot](./_readme-image/9_paste_file.png)
 Here, we are developing our application using javascript. So, you can delete **go, java and typescript** directory from here if you want. Just make sure we have **fabric-client, javascript, networkDown.sh and startFabric.sh** inside **fabcar**
 
-5. Now, open vscode or any other text editor you use and open **fabric-samples** there.
+4. Now, open vscode or any other text editor you use and open **fabric-samples** there.
 ![App Screenshot](./_readme-image/10_open_editor.png)
 
 You should have a similar window with these file in your text editor.
-You are now good to go to the next sesction.
+You are now good to go to the next section.
 
 - **Checkpoint 1: Show this to your teacher**
 
 ## Section 2: Running the complete application
-In this section, you will run the complete application added with User Interface to intereact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while running the application. Once you successfully run it, your teacher will explain the code for you. 
+In this section, you will run the complete application added with User Interface to interact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while running the application. Once you successfully run it, your teacher will explain the code for you. 
 
 1. Open terminal from your code editor. You current path should be in **fabric/fabric-samples** like mentioned in the image below:
 ![App Screenshot](./_readme-image/11_editor_path.png)
@@ -199,7 +197,7 @@ cd fabcar/javascript
 ```
 npm i
 ``` 
-If you cannot run the command for the permission, just add keyword "sudo" at the beginning of the command. This may take time to install packages depending on your internet connection. After, successfull installation, you should see some logs similar to image below:
+If you cannot run the command for the permission, just add keyword "sudo" at the beginning of the command. This may take time to install packages depending on your internet connection. After, successful installation, you should see some logs similar to image below:
 ![App Screenshot](./_readme-image/12_package_installation.png)
 
 4. In the upcoming step, we will start the network and deploy chaincode. But we need to shut down if currently any network is running. To shut down first go to the  **fabcar** directory from the vscode terminal by:
@@ -255,7 +253,7 @@ This will, start the backend service and you should see a response like below:
 ```
 cd fabcar/fabcar-client/
 ```
-10. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of options. Insall the extension shown in the image:
+10. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of options. Install the extension shown in the image:
 ![App Screenshot](./_readme-image/17_install_live_server.png)
 
 11. Now, click the **index.html** file and start **live-server** from the  bottom-right of the vscode.
