@@ -141,6 +141,12 @@ sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
 This process will take time depending on your internet speed. Once end, you will see response like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
 ![App Screenshot](./_readme-image/5_install_sample_fabric.png)
 
+🤔🤔🤔 If you face difficulties to run the command you try the alternative command provided below:
+
+```
+sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.2 1.4.9
+```
+
 20. Now iff you, check **fabric-samples** dirrectory, you will see a lot of files there. However,  for today's lab we only need somme of them. Therefore, all the files and directory, except the files mentioned in the image below:
 ![App Screenshot](./_readme-image/6_required_file_list.png)
 
@@ -258,4 +264,12 @@ cd fabcar/fabcar-client/
 This will start our frontend server and a browser popup will open like image below:
 ![App Screenshot](./_readme-image/19_UI.png)
 
-**Checkpoint 2: Show this to  your teacher**
+Now, use and try to understand the features.
+
+
+
+**Checkpoint 2: Show this to your teacher**
+
+The diagram provided below shows how the backend, frontend and chaincode maintain their communication. Here, the respective file/folder names are also included  for easier understanding. Here fabric-client  is the frontend part, javascript folder contains the backend related services and fabric.js is the chaincode which is located in chaincode/fabcar/javascript/lib directory.
+
+![App Screenshot](./_readme-image/20_fabric_application_diagram.png)
