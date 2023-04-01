@@ -48,6 +48,13 @@ sudo apt-get update
 This will show logs like below:
 ![App Screenshot](./_readme-image/1_update_apt.png)
 
+NOTE: If you a GPG error when running apt-get update run the following command: 
+```shell
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo apt-get update
+```
+
+
 8. Install docker :
 ```
 sudo apt-get install docker-ce docker-ce-cli containerd.io -y
@@ -128,7 +135,7 @@ docker container prune
 
 18. Next, copy and run the exact same command( don't remove space to make it one line sentence ).
 ```
-cd
+cd ../
 mkdir fabric
 cd fabric
 ```
@@ -147,12 +154,12 @@ This process will take time depending on your internet speed. Once it ends, you 
 sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.2 1.4.9
 ```
 
-20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However,  for today's lab we only need some of them. Therefore, all the files and directory, except the files mentioned in the image below:
+20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However,  for today's lab we only need some of them mentioned in the image below:
 ![App Screenshot](./_readme-image/6_required_file_list.png)
 
 These are the files and directories we should have.
 
-- **Checkpoint ( optional ): Show this to your teacher.**
+- **Checkpoint 1: Show this to your teacher.**
     -
 
 
@@ -162,7 +169,6 @@ In this section, we will see how we can communicate with the chaincode from the 
 
 1. First, download the files from https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar and unzip the contents. If you want you also can clone it. To clone it open terminal and issue:
 ```
-cd
 git clone https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar.git
 ```
 This will successfully clone the github repository and now you should have a directory called **Hyperledger-Fabric-Fabcar** to your **Home** directory. 
@@ -181,7 +187,7 @@ Here, we are developing our application using javascript. So, you can delete **g
 You should have a similar window with these file in your text editor.
 You are now good to go to the next section.
 
-- **Checkpoint 1: Show this to your teacher**
+- **Checkpoint 2: Show this to your teacher**
 
 ## Section 2: Running the complete application
 In this section, you will run the complete application added with User Interface to interact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while running the application. Once you successfully run it, your teacher will explain the code for you. 
@@ -262,11 +268,15 @@ cd fabcar/fabcar-client/
 This will start our frontend server and a browser popup will open like image below:
 ![App Screenshot](./_readme-image/19_UI.png)
 
-Now, use and try to understand the features.
+Now, use and try to understand the features. You can check the currently running docker container using:
+```shell
+docker ps
+```
+You should see the status of the containers are up.In addition to  the  peers of org1, org2 and orderer now we also have ca_org1 and ca_rg2, ca_orderer and most importantly the couchDb;3.1.1 with port 5984. This is the database, where  our state data is stored.  go to  this link: http://localhost:5984/_utils/#login and you will see a login option to couchDB has appeared. default credential to access it is, ```username: admin```, ```password: adminpw```. once you are logged in, you will see a UI like below where **mychannel_fabcar** is the database we are currently using. Explore it you should see these are the same data created by initLedger function  of our chaincode.
+![App Screenshot](./_readme-image/database.png)
 
 
-
-**Checkpoint 2: Show this to your teacher**
+**Checkpoint 3: Show till this part to your teacher**
 
 The diagram provided below shows how the backend, frontend and chaincode maintain their communication. Here, the respective file/folder names are also included  for easier understanding. Here fabric-client  is the frontend part, javascript folder contains the backend related services and fabric.js is the chaincode which is located in chaincode/fabcar/javascript/lib directory.
 
