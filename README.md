@@ -1,5 +1,5 @@
 
-# Hyperledger Fabric Part - 2
+# Hyperledger Fabric Part - Application
 
 From the last lab, we created our dev environment and used test network and interact with an application called fabcar. Today we will extend our knowledge by understanding the inner mechanism of fabcar and finally we will see how we can integrate frontend with our fabcar application. Finally we will use it from our browser.
 
@@ -68,7 +68,7 @@ Don’t worry by seeing the message **“Unable to find image 'hello-world:lates
 After successfully installation you should see a message like below:
 ![App Screenshot](./_readme-image/2_hello_docker.png)
 
-10. If you cannot run the above command and it shows the permission denied message, then you might need to use the following commands to ensure that the user can run the docker commands without being sudo. However, if the **step 9** worked, you can skip this step 10.
+10. Next, you need to use the following commands to ensure that the user can run the docker commands with proper access privilege. 
 - Add docker to user group
 ```
 sudo groupadd docker
@@ -84,13 +84,15 @@ sudo usermod -a -G docker $USER
 newgrp docker
 ```
 
-- Now, again test the docker installation from **step 9**. If step 9 fails again, Then issue the command:
+- Now, you need to rebot the PC to make the changes function properly. Therefore run the command:
 ```
 sudo reboot
 ```
 This will restart your machine and then again open the terminal and follow **step 9**. it should work now.
 
-11. Download the docker-compose binary file using the command mentioned below. You can  see the version that we are using is 1.29.2. If you use an older version, you may get errors in upcoming steps. Therefore you should maintain the version according to the instruction of this lab:
+For more information on docker installation, you may visit here: [Link1](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04), [Link2](https://docs.docker.com/engine/install/ubuntu/)
+
+11. Download the docker-compose binary file using the command mentioned below. You can see the version that we are using is 1.29.2. If you use an older version, you may get errors in upcoming steps. Therefore you should maintain the version according to the instruction of this lab:
 ```
 sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 ```
@@ -143,7 +145,7 @@ If fabric file already exist, delete and run the command again.
 
 19. Now, by issuing the following command we will install fabric version 2.2.2 and ca version 1.4.9
 ```
-sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
+sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.4.9 1.5.5
 ```
 This process will take time depending on your internet speed. Once it ends, you will see responses like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
 ![App Screenshot](./_readme-image/5_install_sample_fabric.png)
@@ -151,13 +153,15 @@ This process will take time depending on your internet speed. Once it ends, you 
 🤔🤔🤔 If you face difficulties to run the command, try the alternative command provided below:
 
 ```
-sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.2 1.4.9
+sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.4.9 1.5.5
 ```
 
-20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However,  for today's lab we only need some of them mentioned in the image below:
+20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However, for today's lab we will interact with the content marked in the image below:
 ![App Screenshot](./_readme-image/6_required_file_list.png)
 
 These are the files and directories we should have.
+
+NOTE: To learn hyperledger fabric, there are multiple sample application which is available for new learners. It is recommended for the learners that they graually explore the existing demo projects as a learning path. Fabric, uses a few binaries (in the `fabric-samples/bin` directory) to allow the developers to develop the featues provided by fabric.If you are not aware of binaries, think it is like an executable file. The **bin** folder in the above image contains the all the binaries. These binaries are used together with few configuration available in the `fabric-samples/config` directory. There are some additional configurations require for networks and organizations. Fabric architecture is complex and you need time to understand all of these. Therefore, it is suggested that you move steadily to learn hyperledger fabric.  
 
 - **Checkpoint 1: Show this to your teacher.**
     -
@@ -171,15 +175,18 @@ In this section, we will see how we can communicate with the chaincode from the 
 ```
 git clone https://github.com/YEASIN49/Hyperledger-Fabric-Fabcar.git
 ```
-This will successfully clone the github repository and now you should have a directory called **Hyperledger-Fabric-Fabcar** to your **Home** directory. 
+This will successfully clone the github repository and now you should have a directory called **Hyperledger-Fabric-Fabcar**. 
 ![App Screenshot](./_readme-image/7_cloned_repo.png)
 
-2. Now, go to the **Hyperledger-Fabric-Fabcar** directory and copy **fabric-client** and **javascript** folder.
+2. Now, go to the **Hyperledger-Fabric-Fabcar** directory and copy all contents.
 ![App Screenshot](./_readme-image/8_copy_file.png)
 
-3. Now, go to the **fabric/fabric-samples/fabcar** directory and paste the copied files.
+These are the contents of a demo application called fabcar that we will run today.
+
+3. Now, go to the **fabric/fabric-samples** directory and create a file called **fabcar**. Next, paste all the copied contents here.
 ![App Screenshot](./_readme-image/9_paste_file.png)
-Here, we are developing our application using javascript. So, you can delete **go, java and typescript** directory from here if you want. Just make sure we have **fabric-client, javascript, networkDown.sh and startFabric.sh** inside **fabcar**
+
+Here, we are developing our application using javascript. Here the **chaincode-javascript** directory contains the chaincode written in javascript, **fabric-client** contains the frontend code. The **api-server** contains the rest API server, which bridges the frontend to communicate with the fabric ledger via chaincode.
 
 4. Now, open vscode or any other text editor you use and open **fabric-samples** there.
 ![App Screenshot](./_readme-image/10_open_editor.png)
@@ -187,52 +194,68 @@ Here, we are developing our application using javascript. So, you can delete **g
 You should have a similar window with these file in your text editor.
 You are now good to go to the next section.
 
+
 - **Checkpoint 2: Show this to your teacher**
 
-## Section 2: Running the complete application
-In this section, you will run the complete application added with User Interface to interact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while running the application. Once you successfully run it, your teacher will explain the code for you. 
+## Section 2: Understanding the application setup
 
-1. Open terminal from your code editor. You current path should be in **fabric/fabric-samples** like mentioned in the image below:
-![App Screenshot](./_readme-image/11_editor_path.png)
+To run hyperledger fabric, there are some common steps: 
 
-2. Go to the javascript directory inside fabcar using:
-```
-cd fabcar/javascript
-```
-3. Now, we need to install npm packages. You can find the necessary packages that we are going to install inside the package.json file. To install run:
-```
-npm i
-``` 
-If you cannot run the command for the permission, just add keyword "sudo" at the beginning of the command. This may take time to install packages depending on your internet connection. After, successful installation, you should see some logs similar to image below:
-![App Screenshot](./_readme-image/12_package_installation.png)
+  i. Start a network 
 
-4. In the upcoming step, we will start the network and deploy chaincode. But we need to shut down if currently any network is running. To shut down first go to the  **fabcar** directory from the vscode terminal by:
-```
-cd ../
-```
-5. If you check the files of current directory by using the command ```ls``` you should see something like below:
+  ii. Deploy chaincode to the network
+  
+  iii. Start and run application (frontend, backend, etc.)
 
-![App Screenshot](./_readme-image/13_current_path_fabcar.png)
+**Network:** The `fabric-samples` provides preconfigured test network which helps the developer to start learning the processes. In this session, we will use the **test-network** as our network which is available in the `fabric-samples/test-network` directory. Hyperledger fabric is designed to be a consortium blockchain platform, that means multiple organizations are part of its network. The **test-network** module is pre-configured to run two organizations. One can add more organizations, but it is beyond the scope of today's session.
 
-6. run the command to shut down the network:
-```
-./networkDown.sh
-```
-This should, stop existing running hyperledger fabric test-network. Again, if you cannot run the command for access permission restriction, simply add keyword 'sudo' at the beginning of the command. After successfully shutting down the network you should see response like below:
-![App Screenshot](./_readme-image/14_network_stop.png)
+**Chaincode:** In ethereum, we used smart contract that enables the programming capabilities of ethereum blockchain. Similarly, Hyperledger fabric uses chaincode to executes its pragramming logic to interact with the ledger. The `fabric-samples/fabcar/chaincode-javascript` directory contains the chaincode for our application. 
 
-7. Now, start the network:
+**API and Frontend:** The chaincode communicates within the network to interact with the ledger. User cannot use the chaincode directly from their end. Therefore, a rest API server is required, through which the frontend communicates with the chaincode. The `fabric-samples/fabcar/api-server` contains the rest APIs and the `fabric-samples/fabcar/fabcar-client` folder holds the frontend of the system.
+
+
+
+## Section 3: Running the complete application
+In this section, you will run the complete application added with User Interface to interact from the browser. You need to follow the steps to run it. Don't worry if you don't understand anything while running the application.
+
+### 3.1. Starting the network and Deploying the chaincode 
+Fabric uses binaries and some configurations to execute its components. Usually the binaries are used through commands from terminal. However, fabric provides some bash scripts through which we can run them easily. E.g. to start the sample network, a basic terminal command is: `./network.sh up createChannel -ca -s couchdb`. There are some more commands, therefore it is required to read and understand the `fabric-samples/fabcar/startNetwork.sh`. This file calls the network module of `test-network` directory and deploy the chaincode. Also, to understand how the networks runs, you need to explore the `test-network/network.sh` file. However, this should be your own interest and we will not explore those in this session as it requires a decent time and some understanding of shell.  
+
+Now, we will start the network. Open terminal from your code editor and go to the `fabric-samples/fabcar` directory from the terminal and run the command:
 ```
 ./startFabric.sh javascript
 ```
-Again, for permission restriction, use 'sudo'. This command, start and also deploy the chaincode. So, this will take time to complete. Once it is completed, you should see a large logs printed in your vscode terminal which ends with similar response like mentioned in the image below:
-![App Screenshot](./_readme-image/15_start_network.png)
 
-8. Now, we will power up our backend service. To do this, first go  to the **javascript** directory in fabcar.
+This command will invoke the `test-network` and initialize it and also it will deploy the chaincode available in the `fabcar/chaincode-javascript` directory to the fabric network.
+
+Now, if you run the command 
 ```
-cd javascript
+docker ps
 ```
-9. run the command below to enroll admin to organization:
+
+You should see the following container is running properly:
+
+![App Screenshot](./_readme-image/10_running_docker_container.png)
+
+
+### 3.2 Running the application
+
+1. Open a new terminal (or just move using `cd` command) and your path should be in **HERE_SOME_FOLDER/fabric/fabric-samples**. A reference is given below:
+![App Screenshot](./_readme-image/11_editor_path.png)
+
+2. Go to the api-server directory inside fabcar using:
+```
+cd fabcar/api-server
+```
+3. Now, we need to install npm packages. You can find the necessary packages that we are going to install inside the package.json file. It is strongly recommended to use node version 18. To install, run:
+```
+npm i
+``` 
+After, successful installation, you should see some logs similar to image below:
+![App Screenshot](./_readme-image/12_package_installation.png)
+
+
+4. run the command below to enroll admin to organization:
 ```
 node enrollAdmin.js
 ```
@@ -244,7 +267,7 @@ and then run the command to register user to organization:
 node registerUser.js
 ```
 
-This will create a user under organization. You will see a response like below:
+This will create a user under organization (Org1). You will see a response like below:
 ![App Screenshot](./_readme-image/16.2-_register_user.png)
 
 Finally, we will power up our backend using:  
@@ -255,29 +278,42 @@ npm start
 This will, start the backend service and you should see a response like below:
 ![App Screenshot](./_readme-image/16_start_backend.png)
 
-9. Now, leave the terminal untouched and open a new terminal from the vscode and go to the **fabcar-client** directory.
+5. Now, leave the terminal untouched and open a new terminal from the vscode and go to the **fabcar-client** directory.
 ```
 cd fabcar/fabcar-client/
 ```
-10. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of options. Install the extension shown in the image:
+6. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of options. Install the extension shown in the image:
 ![App Screenshot](./_readme-image/17_install_live_server.png)
 
-11. Now, click the **index.html** file and start **live-server** from the  bottom-right of the vscode.
+7. Now, click the **index.html** file and start **live-server** from the  bottom-right of the vscode.
 ![App Screenshot](./_readme-image/18_start_UI.png)
 
 This will start our frontend server and a browser popup will open like image below:
 ![App Screenshot](./_readme-image/19_UI.png)
 
-Now, use and try to understand the features. You can check the currently running docker container using:
+Now, interact with the application and try to understand the features. 
+
+You can check the currently running docker container using:
 ```shell
 docker ps
 ```
-You should see the status of the containers are up.In addition to  the  peers of org1, org2 and orderer now we also have ca_org1 and ca_rg2, ca_orderer and most importantly the couchDb;3.1.1 with port 5984. This is the database, where  our state data is stored.  go to  this link: http://localhost:5984/_utils/#login and you will see a login option to couchDB has appeared. default credential to access it is, ```username: admin```, ```password: adminpw```. once you are logged in, you will see a UI like below where **mychannel_fabcar** is the database we are currently using. Explore it you should see these are the same data created by initLedger function  of our chaincode.
+You should see the status of the containers are up.In addition to  the  peers of org1, org2, orderer. Also, we have ca_org1 and ca_rg2, ca_orderer and the couchDb;3.1.1 with port 5984. This is the database, where  our state data is stored. From theory class, you should be aware of *world state* in fabric. This couchDB holds such data. Now, go to this link: http://localhost:5984/_utils/#login and you will see a login option to couchDB has appeared. default credential to access it is, ```username: admin```, ```password: adminpw```. once you are logged in, you will see a UI like below where **mychannel_fabcar** is the database we are currently using. Explore it you should see these are the same data created by initLedger function  of our chaincode.
 ![App Screenshot](./_readme-image/database.png)
+
 
 
 **Checkpoint 3: Show till this part to your teacher**
 
-The diagram provided below shows how the backend, frontend and chaincode maintain their communication. Here, the respective file/folder names are also included  for easier understanding. Here fabric-client  is the frontend part, javascript folder contains the backend related services and fabric.js is the chaincode which is located in chaincode/fabcar/javascript/lib directory.
+
+
+To stop the network, you can use the available script. Go to the `fabric/samples/fabcar` directory from terminal window and run the command:
+```
+./networkDown.sh
+```
+This should, stop existing running hyperledger fabric test-network. After successfully shutting down the network you should see response like below:
+![App Screenshot](./_readme-image/14_network_stop.png)
+
+
+The diagram provided below shows how the backend, frontend and chaincode maintain their communication. Here, the respective file/folder names are also included  for easier understanding. Here fabric-client  is the frontend part, api-server folder contains the backend related services and fabcar.js is the chaincode which is located in `fabcar/chaincode-javascript/lib` directory.
 
 ![App Screenshot](./_readme-image/20_fabric_application_diagram.png)
