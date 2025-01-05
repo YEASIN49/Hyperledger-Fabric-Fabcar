@@ -315,6 +315,7 @@ To stop the network, you can use the available script. Go to the `fabric/samples
 ./networkDown.sh
 ```
 This should, stop existing running hyperledger fabric test-network. After successfully shutting down the network you should see response like below:
+
 ![App Screenshot](./_readme-image/14_network_stop.png)
 
 
