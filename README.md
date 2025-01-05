@@ -143,12 +143,16 @@ cd fabric
 ```
 If fabric file already exist, delete and run the command again. 
 
-19. Now, by issuing the following command we will install fabric version 2.2.2 and ca version 1.4.9
+19. Now, by issuing the following command we will install fabric version 2.4.9 and ca version 1.5.5
 ```
 sudo curl -sSL http://bit.ly/2ysbOFE | bash -s -- 2.4.9 1.5.5
 ```
-This process will take time depending on your internet speed. Once it ends, you will see responses like below. There are different versions of Fabric available. However, the 2.2 is the LTS one. It might take some time. This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
+This process will take time depending on your internet speed. Once it ends, you will see responses like below. 
+
+
 ![App Screenshot](./_readme-image/5_install_sample_fabric.png)
+
+This will create a folder called **“fabric-sample”**. Check it, you should see a lot of files inside it. These are some sample boilerplates. we only need some of them. You will learn it later in this lab. 
 
 🤔🤔🤔 If you face difficulties to run the command, try the alternative command provided below:
 
