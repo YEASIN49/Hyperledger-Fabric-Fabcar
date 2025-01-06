@@ -303,10 +303,8 @@ This will, start the backend service and you should see a response like below:
 
 ![App Screenshot](./_readme-image/16_start_backend.png)
 
-5. Now, leave the terminal untouched and open a new terminal from the vscode and go to the **fabcar-client** directory.
-```
-cd fabcar/fabcar-client/
-```
+5. Now, leave the terminal untouched. Open the index.html file from the `fabcar/fabcar-client/` directory.
+
 6. Now, go to the, extension tab of vscode and search 'live server'. You will find a lot of options. Install the extension shown in the image:
 
 ![App Screenshot](./_readme-image/17_install_live_server.png)
@@ -347,4 +345,3 @@ This should, stop existing running hyperledger fabric test-network. After succes
 The diagram provided below shows how the backend, frontend and chaincode maintain their communication. Here, the respective file/folder names are also included  for easier understanding. Here fabric-client  is the frontend part, api-server folder contains the backend related services and fabcar.js is the chaincode which is located in `fabcar/chaincode-javascript/lib` directory.
 
 ![App Screenshot](./_readme-image/20_fabric_application_diagram.png)
-
