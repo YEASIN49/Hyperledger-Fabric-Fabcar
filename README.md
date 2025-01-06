@@ -157,7 +157,7 @@ This will create a folder called **“fabric-sample”**. Check it, you should s
 🤔🤔🤔 If you face difficulties to run the command, try the alternative command provided below:
 
 ```
-sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.4.9 1.5.5
+sudo curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/bootstrap.sh | bash -s -- 2.4.9 1.5.5
 ```
 
 20. Now, if you check **fabric-samples** directory, you will see a lot of files there. However, for today's lab we will interact with the content marked in the image below:
